@@ -1,0 +1,34 @@
+{
+"name": "JunkDrawer \u2122",
+"version": "0.1",
+"description": "Mashup & share junk.",
+"background_page" : "background.html",
+
+"browser_action": {
+
+    "default_icon": "icon.png",
+    "default_title": "title",
+    "name":"clickme:",
+    "popup": "popup.html"
+      },    
+
+"options_page":"options.html",
+    
+    "permissions": [
+      "http://*/",
+        "https://*/",
+        "tabs"
+        ],
+
+
+"content_scripts": [
+{
+"matches": ["<all_urls>"],
+"css": ["my.css", "jquery-ui.css"],
+"js": ["jquery.js", "jquery-ui.js", "myscript.js"]
+
+}
+]
+
+
+}

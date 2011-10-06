@@ -1,0 +1,105 @@
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="jquery-ui.js"></script>
+
+<script>
+    
+    _app_name = 'JunkDrawer \u2122';
+
+$(document).ready(function(){ 
+        
+    if (localStorage['lastPage'] == 'NaN')
+            localStorage['lastPage'] = 0;
+    if (localStorage['lastPage'] != 'undefined')
+            _id = localStorage['lastPage'];
+    else _id=0;
+      
+     $('#counter').text(_id);
+     $('#title').text(_app_name);
+     loadPage(_id);
+});
+
+
+function back(){
+    
+    if (_id <= 0)
+            return;
+    localStorage[_id] = $('#output_data').html();
+    _id--;
+    loadPage();
+}
+
+
+function forward(){
+ 
+    if (_id >= localStorage.length)
+            return;
+
+    localStorage[_id] = $('#output_data').html();
+    _id++;
+
+    loadPage();
+}
+
+
+
+function loadPage(){
+
+    content = localStorage[_id];
+    $('#output_data').html(content);
+    console.log('restoring: '+content);
+    console.log(localStorage);
+    
+    $('#counter').text(_id);
+    localStorage['lastPage'] = _id;
+    $('*', '#output_data').draggable();  
+}
+
+
+function init(){
+    
+    console.log(localStorage); 
+    if(localStorage['count'] =='undefined')
+            localStorage['count'] =0;
+            
+    if (localStorage[localStorage.length -1] != ""){
+
+        content =  localStorage[localStorage.length-1];
+        console.log('Restoring:' +content);
+        $('body').append(content);
+    }
+}
+
+
+function udate(){
+    
+    chrome.tabs.getSelected(null, function(tab) {
+
+        chrome.tabs.sendRequest(tab.id, {counter: 1}, function handler(response) {
+        
+            console.log('response:'); 
+            console.log(response);
+            localStorage[localStorage.length] = JSON.parse(response);
+            $('#output_data').append(JSON.parse(response)); 
+        });
+    });
+}
+   
+</script>
+
+<html>   
+    <style>
+
+        body {
+    
+            width: 400px;
+        }
+
+    </style>
+    
+    <h3 id="title"></h3>    
+    <a href="" onclick="back(); return false;" >&lt;--</a>              <a href="" onclick="forward(); return false;" >--&gt;</a><span id="counter"></span> 
+    <div id="output_data"></div>
+    <input type="button" value="snap" onclick="udate()"/>
+
+</html>
+

@@ -1,0 +1,35 @@
+<script src="jquery.js"></script>
+
+
+<script type="text/javascript">
+   var lastTabId = 0;
+    var tab_clicks = {};
+
+$(document).ready(function(){
+        
+    //  chrome.tabs.getSelected(null, function(tab) {
+    //      lastTabId = tab.id;
+    //      chrome.pageAction.show(lastTabId);
+    //  });
+});
+
+    //  chrome.tabs.onSelectionChanged.addListener(function(tabId) {
+    //      lastTabId = tabId;
+    //      chrome.pageAction.show(lastTabId);
+    // });
+
+
+    // background.html has access to options.html localStorage.
+    console.log('background');
+    localStorage['test'] = "testing";
+    console.log(localStorage);
+
+    // Chrome 13+ can do x-site xhr:
+    //  $.get("http://www.yahoo.com/", function(data){
+    //      $('body').append(data);
+    //      console.log('got page');
+    //  });
+            
+ </script>
+
+

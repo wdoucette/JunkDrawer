@@ -1,0 +1,52 @@
+<script src="jquery.js"></script>
+
+<h3>Junkdrawer Options</h3>
+
+<form action="javascript:save_values($('input'))">
+First Name: <input type="textbox" name="fname" />
+Last Name:  <input type="textbox" name="lname" />
+Info:   <input type="textbox" name="info" />
+<input type="submit" enabled=false value="save"/>
+</form>
+<script>
+
+$(document).ready(function(){
+
+    load_values();
+    $('input').bind('change',function(){
+        
+        save_values(this);
+    
+    });
+    $(window).unload(function(){
+        // doesnt work in chrome ext.
+        //save_vals($('input'))
+    });
+
+});
+
+function load_values(){
+
+    $("input").each(function(){
+       
+        if($(this).attr('type')=="textbox"){
+        
+            $(this).val(eval('localStorage["' + $(this).attr('name') +'"]'));
+        }
+    });
+}
+
+function save_values(vals){
+
+    $(vals).each(function(){
+       
+        if($(this).attr('type') == "textbox"){
+            
+            eval('localStorage["'+$(this).attr('name') +'"]="'+ $(this).val()+'"');
+        }
+    });
+    
+    console.log(localStorage);
+
+}
+</script>
